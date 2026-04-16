@@ -224,5 +224,13 @@
     "title": "404",
     "message": "抱歉，您访问的页面不存在。",
     "backHome": "返回首页"
+  },
+  "profile": {
+    "title": "个人设置",
+    "displayName": "显示名称",
+    "email": "邮箱",
+    "save": "保存",
+    "saved": "保存成功",
+    "saveFailed": "保存失败"
   }
 }

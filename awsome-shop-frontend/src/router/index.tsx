@@ -8,6 +8,7 @@ import ShopHome from '../pages/ShopHome';
 import ProductDetail from '../pages/ProductDetail';
 import MyOrders from '../pages/MyOrders';
 import MyPoints from '../pages/MyPoints';
+import Profile from '../pages/Profile';
 import Dashboard from '../pages/Dashboard';
 import AdminProducts from '../pages/AdminProducts';
 import AdminCategories from '../pages/AdminCategories';
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
       { path: 'product/:id', element: <ProductDetail /> },
       { path: 'orders', element: <MyOrders /> },
       { path: 'points', element: <MyPoints /> },
+      { path: 'profile', element: <Profile /> },
     ],
   },
   // Admin routes

@@ -224,5 +224,13 @@
     "title": "404",
     "message": "Sorry, the page you visited does not exist.",
     "backHome": "Back to Home"
+  },
+  "profile": {
+    "title": "Profile Settings",
+    "displayName": "Display Name",
+    "email": "Email",
+    "save": "Save",
+    "saved": "Saved successfully",
+    "saveFailed": "Save failed"
   }
 }

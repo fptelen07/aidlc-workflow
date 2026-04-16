@@ -10,6 +10,7 @@ import Divider from '@mui/material/Divider';
 import TranslateIcon from '@mui/icons-material/Translate';
 import PaletteIcon from '@mui/icons-material/Palette';
 import LogoutIcon from '@mui/icons-material/Logout';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { useAuthStore } from '../store/useAuthStore';
 import { useAppStore } from '../store/useAppStore';
 
@@ -108,6 +109,15 @@ export default function AvatarMenu() {
         </Box>
 
         <Divider sx={{ borderColor: '#F1F5F9' }} />
+
+        {/* Profile Settings */}
+        <MenuItem
+          onClick={() => { handleClose(); navigate('/profile'); }}
+          sx={{ py: '10px', px: '12px', mx: '6px', my: '2px', borderRadius: '8px', gap: '12px' }}
+        >
+          <SettingsIcon sx={{ fontSize: 20, color: '#64748B' }} />
+          <Typography sx={{ fontSize: 14, color: '#1E293B' }}>{t('profile.title')}</Typography>
+        </MenuItem>
 
         {/* Switch Language */}
         <MenuItem

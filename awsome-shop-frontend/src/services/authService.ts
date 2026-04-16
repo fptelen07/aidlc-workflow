@@ -13,4 +13,7 @@ export const authService = {
   getCurrentUser() {
     return request.post('/v1/auth/me', {});
   },
+  updateProfile(data: { email?: string; displayName?: string }) {
+    return request.post('/v1/auth/profile/update', data);
+  },
 };
