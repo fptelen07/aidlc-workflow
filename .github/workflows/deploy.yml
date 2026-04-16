@@ -85,7 +85,9 @@ jobs:
           tar xzf ~/deploy-package.tar.gz
 
           # Stop old services
-          pkill -f 'auth-service.jar\|product-service.jar\|points-service.jar\|order-service.jar\|gateway-service.jar' 2>/dev/null || true
+          for p in 8001 8002 8003 8004 8080; do
+            fuser -k $p/tcp 2>/dev/null || true
+          done
           sleep 3
 
           # Deploy JARs
