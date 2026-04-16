@@ -1,0 +1,228 @@
+{
+  "app": {
+    "title": "Awesome 商城"
+  },
+  "nav": {
+    "home": "首页",
+    "notFound": "页面未找到"
+  },
+  "home": {
+    "welcome": "欢迎来到 Awesome 商城",
+    "description": "项目骨架已就绪，开始构建你的电商应用吧。"
+  },
+  "common": {
+    "cancel": "取消",
+    "confirm": "确认",
+    "save": "保存",
+    "delete": "删除",
+    "noData": "暂无数据"
+  },
+  "login": {
+    "brand": "AWSome Shop",
+    "brandSubtitle": "员工积分兑换平台",
+    "brandDesc": "用您的积分兑换心仪好物\n简单便捷，触手可得",
+    "title": "欢迎回来",
+    "subtitle": "登录您的账户以继续",
+    "usernameLabel": "用户名",
+    "usernamePlaceholder": "请输入用户名",
+    "passwordLabel": "密码",
+    "passwordPlaceholder": "请输入密码",
+    "loginBtn": "登 录",
+    "loginFailed": "用户名或密码错误",
+    "noAccount": "还没有账户？",
+    "register": "立即注册",
+    "hint": "测试账号：employee / emp123（员工）或 admin / admin123（管理员）"
+  },
+  "register": {
+    "title": "创建账户",
+    "subtitle": "注册一个新账户以开始使用",
+    "usernamePlaceholder": "请输入用户名",
+    "displayNamePlaceholder": "请输入显示名称",
+    "passwordPlaceholder": "请输入密码（至少6位）",
+    "confirmPasswordPlaceholder": "请再次输入密码",
+    "submitBtn": "注 册",
+    "submitting": "注册中...",
+    "hasAccount": "已有账户？",
+    "login": "立即登录",
+    "required": "请填写所有必填项",
+    "passwordTooShort": "密码长度不能少于6位",
+    "passwordMismatch": "两次输入的密码不一致",
+    "failed": "注册失败，用户名可能已存在"
+  },
+  "employee": {
+    "nav": {
+      "home": "首页",
+      "orders": "兑换记录",
+      "points": "积分中心"
+    },
+    "searchPlaceholder": "输入商品名称搜索...",
+    "search": "搜索",
+    "points": "积分",
+    "heroTitle": "本月精选好物",
+    "heroSubtitle": "用积分兑换您心仪的商品，每月更新",
+    "heroBrowse": "立即浏览",
+    "sold": "已兑换",
+    "soldUnit": "件",
+    "redeem": "兑换",
+    "allCategories": "全部"
+  },
+  "productDetail": {
+    "back": "返回",
+    "points": "积分",
+    "stock": "库存",
+    "redeem": "立即兑换",
+    "insufficientPoints": "积分不足",
+    "confirmTitle": "确认兑换",
+    "confirmMsg": "确定要用积分兑换「{{name}}」吗？将消耗 {{points}} 积分。",
+    "notFound": "商品不存在"
+  },
+  "myOrders": {
+    "title": "兑换记录",
+    "all": "全部",
+    "pending": "待处理",
+    "completed": "已完成",
+    "rejected": "已拒绝",
+    "product": "商品",
+    "points": "积分",
+    "status": "状态",
+    "time": "时间"
+  },
+  "myPoints": {
+    "title": "积分中心",
+    "balance": "当前积分余额",
+    "all": "全部",
+    "grant": "发放",
+    "deduct": "扣减",
+    "expire": "过期",
+    "type": "类型",
+    "amount": "数量",
+    "reason": "原因",
+    "time": "时间"
+  },
+  "admin": {
+    "title": "管理",
+    "welcome": "欢迎",
+    "userLabel": "管理员",
+    "dashboard": "仪表盘",
+    "nav": {
+      "dashboard": "仪表盘",
+      "products": "产品管理",
+      "categories": "分类管理",
+      "points": "积分管理",
+      "orders": "兑换记录",
+      "users": "用户管理"
+    },
+    "metrics": {
+      "totalProducts": "总商品数",
+      "totalUsers": "注册用户",
+      "monthlyRedemptions": "本月兑换",
+      "pointsCirculation": "积分流通"
+    },
+    "recentOrders": "最近兑换记录",
+    "viewAll": "查看全部",
+    "table": {
+      "user": "用户",
+      "product": "商品",
+      "points": "积分",
+      "status": "状态",
+      "time": "时间"
+    }
+  },
+  "adminProducts": {
+    "title": "商品管理",
+    "add": "新建商品",
+    "edit": "编辑商品",
+    "name": "商品名称",
+    "description": "商品描述",
+    "category": "分类",
+    "allCategories": "全部分类",
+    "price": "积分价格",
+    "stock": "库存",
+    "imageUrl": "图片URL",
+    "status": "状态",
+    "active": "已上架",
+    "inactive": "已下架",
+    "actions": "操作",
+    "searchPlaceholder": "搜索商品...",
+    "deleteTitle": "删除商品",
+    "deleteConfirm": "确定要删除该商品吗？"
+  },
+  "adminCategories": {
+    "title": "分类管理",
+    "add": "新建分类",
+    "edit": "编辑分类",
+    "name": "分类名称",
+    "sort": "排序",
+    "actions": "操作",
+    "deleteTitle": "删除分类",
+    "deleteConfirm": "确定要删除该分类吗？有商品关联时无法删除。"
+  },
+  "adminOrders": {
+    "title": "订单管理",
+    "all": "全部",
+    "pending": "待处理",
+    "completed": "已完成",
+    "rejected": "已拒绝",
+    "user": "用户",
+    "product": "商品",
+    "points": "积分",
+    "status": "状态",
+    "time": "时间",
+    "actions": "操作",
+    "confirm": "确认",
+    "reject": "拒绝"
+  },
+  "adminPoints": {
+    "title": "积分管理",
+    "grant": "发放积分",
+    "batchGrant": "批量发放",
+    "monthlyGrant": "本月发放",
+    "monthlyDeduct": "本月扣减",
+    "circulation": "积分流通",
+    "overview": "概览",
+    "historyTab": "变动记录",
+    "rulesTab": "发放规则",
+    "overviewHint": "选择上方标签查看积分变动记录或管理发放规则",
+    "user": "用户",
+    "type": "类型",
+    "amount": "数量",
+    "reason": "原因",
+    "time": "时间",
+    "userId": "用户ID",
+    "userIds": "用户ID列表",
+    "userIdsHint": "多个用户ID用逗号分隔",
+    "addRule": "新建规则",
+    "ruleName": "规则名称",
+    "ruleType": "规则类型",
+    "ruleAmount": "积分数量",
+    "ruleDescription": "规则描述",
+    "ruleEnabled": "启用状态"
+  },
+  "adminUsers": {
+    "title": "用户管理",
+    "searchPlaceholder": "搜索用户...",
+    "username": "用户名",
+    "displayName": "显示名称",
+    "role": "角色",
+    "points": "积分",
+    "createdAt": "注册时间",
+    "admin": "管理员",
+    "employee": "员工"
+  },
+  "menu": {
+    "switchLang": "切换语言",
+    "switchTheme": "切换主题",
+    "logout": "退出登录",
+    "langZh": "中文",
+    "langEn": "English",
+    "themeLight": "浅色",
+    "themeDark": "深色",
+    "roleEmployee": "员工",
+    "roleAdmin": "管理员"
+  },
+  "notFound": {
+    "title": "404",
+    "message": "抱歉，您访问的页面不存在。",
+    "backHome": "返回首页"
+  }
+}

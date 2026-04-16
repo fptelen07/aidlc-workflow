@@ -1,0 +1,15 @@
+package com.awsome.shop.product.application.api.dto.product.request;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
+@Data
+public class DeductStockRequest {
+    @NotNull(message = "商品ID不能为空")
+    private Long id;
+    @NotNull(message = "数量不能为空")
+    @Min(value = 1, message = "数量必须大于0")
+    private Integer quantity;
+    private Long operatorId;
+}

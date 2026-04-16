@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awsome.shop.point.repository.mysql.mapper.points.PointsAccountMapper">
+
+    <!-- 原子更新余额 -->
+    <update id="updateBalance">
+        UPDATE points_account
+        SET balance = balance + #{amount},
+            updated_at = NOW()
+        WHERE user_id = #{userId}
+    </update>
+
+</mapper>

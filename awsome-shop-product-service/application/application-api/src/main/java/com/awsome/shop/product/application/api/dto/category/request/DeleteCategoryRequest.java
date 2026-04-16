@@ -1,0 +1,11 @@
+package com.awsome.shop.product.application.api.dto.category.request;
+
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
+@Data
+public class DeleteCategoryRequest {
+    @NotNull(message = "分类ID不能为空")
+    private Long id;
+    private Long operatorId;
+}
