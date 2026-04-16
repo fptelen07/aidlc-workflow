@@ -1,0 +1,117 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  EC2_HOST: ec2-54-89-171-32.compute-1.amazonaws.com
+  EC2_USER: ec2-user
+  DEPLOY_DIR: /home/ec2-user/awsome-shop
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'corretto'
+          cache: maven
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: awsome-shop-frontend/package-lock.json
+
+      - name: Build backend services
+        run: |
+          for svc in awsome-shop-auth-service awsome-shop-product-service awsome-shop-points-service awsome-shop-order-service awsome-shop-gateway-service; do
+            echo "Building $svc..."
+            cd $svc && mvn clean package -DskipTests -q && cd ..
+            echo "✅ $svc built"
+          done
+
+      - name: Build frontend
+        run: |
+          cd awsome-shop-frontend
+          npm ci
+          npm run build
+
+      - name: Package artifacts
+        run: |
+          mkdir -p deploy-package
+          # Copy backend JARs
+          cp awsome-shop-auth-service/bootstrap/target/awsome-shop-auth-service-*.jar deploy-package/auth-service.jar
+          cp awsome-shop-product-service/bootstrap/target/awsome-shop-product-service-*.jar deploy-package/product-service.jar
+          cp awsome-shop-points-service/bootstrap/target/awsome-shop-point-service-*.jar deploy-package/points-service.jar
+          cp awsome-shop-order-service/bootstrap/target/awsome-shop-order-service-*.jar deploy-package/order-service.jar
+          cp awsome-shop-gateway-service/bootstrap/target/awsome-shop-gateway-service-*.jar deploy-package/gateway-service.jar
+          # Copy frontend dist
+          cp -r awsome-shop-frontend/dist deploy-package/frontend-dist
+          # Copy deploy script
+          cp deploy/deploy-ec2.sh deploy-package/
+          # Copy config files
+          for svc in awsome-shop-auth-service awsome-shop-product-service awsome-shop-points-service awsome-shop-order-service awsome-shop-gateway-service; do
+            mkdir -p deploy-package/config/$svc
+            cp $svc/bootstrap/src/main/resources/application*.yml deploy-package/config/$svc/ 2>/dev/null || true
+          done
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ env.EC2_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Deploy to EC2
+        run: |
+          # Upload package
+          tar czf /tmp/deploy-package.tar.gz -C deploy-package .
+          scp -i ~/.ssh/deploy_key /tmp/deploy-package.tar.gz ${{ env.EC2_USER }}@${{ env.EC2_HOST }}:~/
+
+          # Execute deploy script on EC2
+          ssh -i ~/.ssh/deploy_key ${{ env.EC2_USER }}@${{ env.EC2_HOST }} 'bash -s' << 'DEPLOY_SCRIPT'
+          set -e
+          cd ~
+          mkdir -p awsome-shop-deploy && cd awsome-shop-deploy
+          tar xzf ~/deploy-package.tar.gz
+
+          # Stop old services
+          pkill -f 'auth-service.jar\|product-service.jar\|points-service.jar\|order-service.jar\|gateway-service.jar' 2>/dev/null || true
+          sleep 3
+
+          # Deploy JARs
+          mkdir -p ~/awsome-shop-jars
+          cp *.jar ~/awsome-shop-jars/
+
+          # Deploy frontend
+          rm -rf ~/awsome-shop/awsome-shop-frontend/dist
+          mkdir -p ~/awsome-shop/awsome-shop-frontend
+          cp -r frontend-dist ~/awsome-shop/awsome-shop-frontend/dist
+
+          # Start services
+          cd ~/awsome-shop-jars
+          nohup java -jar auth-service.jar --spring.profiles.active=local > /tmp/auth.log 2>&1 &
+          nohup java -jar product-service.jar --spring.profiles.active=local > /tmp/product.log 2>&1 &
+          nohup java -jar points-service.jar --spring.profiles.active=local > /tmp/points.log 2>&1 &
+          nohup java -jar order-service.jar --spring.profiles.active=local > /tmp/order.log 2>&1 &
+          nohup java -jar gateway-service.jar --spring.profiles.active=local > /tmp/gateway.log 2>&1 &
+
+          # Wait and verify
+          sleep 30
+          for p in 8001 8002 8003 8004 8080; do
+            ss -tlnp 2>/dev/null | grep :$p > /dev/null && echo "Port $p: UP" || echo "Port $p: DOWN"
+          done
+
+          # Cleanup
+          rm -rf ~/awsome-shop-deploy ~/deploy-package.tar.gz
+          echo "Deploy complete!"
+          DEPLOY_SCRIPT
