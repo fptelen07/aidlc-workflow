@@ -103,9 +103,9 @@ export default function AdminPoints() {
   };
 
   const STAT_CARDS = [
-    { key: 'monthlyGrant', icon: TrendingUpIcon, color: '#16A34A', bg: '#DCFCE7', value: stats.monthlyGrant ?? stats.monthlyGrantAmount ?? 0 },
-    { key: 'monthlyDeduct', icon: TrendingDownIcon, color: '#DC2626', bg: '#FEE2E2', value: stats.monthlyDeduct ?? stats.monthlyDeductAmount ?? 0 },
-    { key: 'circulation', icon: AccountBalanceIcon, color: '#7C3AED', bg: '#EDE9FE', value: stats.circulation ?? stats.totalCirculation ?? 0 },
+    { key: 'monthlyGrant', icon: TrendingUpIcon, color: '#16A34A', bg: '#DCFCE7', value: stats.monthlyGranted ?? stats.monthlyGrant ?? 0 },
+    { key: 'monthlyDeduct', icon: TrendingDownIcon, color: '#DC2626', bg: '#FEE2E2', value: stats.monthlyDeducted ?? stats.monthlyDeduct ?? 0 },
+    { key: 'circulation', icon: AccountBalanceIcon, color: '#7C3AED', bg: '#EDE9FE', value: stats.monthlyNet ?? stats.circulation ?? 0 },
   ];
 
   return (

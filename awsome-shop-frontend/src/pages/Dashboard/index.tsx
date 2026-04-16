@@ -16,7 +16,9 @@ import GroupIcon from '@mui/icons-material/Group';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import TollIcon from '@mui/icons-material/Toll';
 import { useNavigate } from 'react-router';
-import { dashboardService } from '../../services/dashboardService';
+import { productService } from '../../services/productService';
+import { pointsService } from '../../services/pointsService';
+import { orderService } from '../../services/orderService';
 
 const METRIC_CONFIG = [
   { key: 'totalProducts', icon: Inventory2Icon, iconColor: '#2563EB', iconBg: '#EFF6FF' },
@@ -41,13 +43,18 @@ export default function Dashboard() {
   const [recentOrders, setRecentOrders] = useState<any[]>([]);
 
   useEffect(() => {
-    dashboardService.getMetrics()
+    // Fetch metrics from existing APIs
+    productService.listProducts({ page: 1, size: 1 })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .then((res: any) => setMetrics(res?.data ?? res ?? {}))
+      .then((res: any) => { const d = res?.data ?? res; setMetrics((prev: any) => ({ ...prev, totalProducts: d?.total ?? 0 })); })
       .catch(() => {});
-    dashboardService.getRecentOrders()
+    pointsService.getStatistics()
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .then((res: any) => setRecentOrders(res?.data ?? res ?? []))
+      .then((res: any) => { const d = res?.data ?? res; setMetrics((prev: any) => ({ ...prev, pointsCirculation: d?.monthlyNet ?? 0, monthlyRedemptions: d?.monthlyDeducted ?? 0 })); })
+      .catch(() => {});
+    orderService.listAllOrders({ page: 1, size: 5 })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .then((res: any) => { const d = res?.data ?? res; setRecentOrders(d?.records ?? d?.list ?? []); setMetrics((prev: any) => ({ ...prev, totalUsers: d?.total ?? 0 })); })
       .catch(() => {});
   }, []);
 

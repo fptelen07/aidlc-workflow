@@ -62,4 +62,9 @@ public class UserDomainServiceImpl implements UserDomainService {
     public void update(UserEntity user) {
         userRepository.update(user);
     }
+
+    @Override
+    public com.awsome.shop.auth.common.dto.PageResult<UserEntity> pageUsers(int page, int size, String keyword) {
+        return userRepository.page(page, size, keyword);
+    }
 }

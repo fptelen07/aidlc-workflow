@@ -16,4 +16,6 @@ public interface UserDomainService {
     UserEntity findByUsername(String username);
 
     void update(UserEntity user);
+
+    com.awsome.shop.auth.common.dto.PageResult<UserEntity> pageUsers(int page, int size, String keyword);
 }

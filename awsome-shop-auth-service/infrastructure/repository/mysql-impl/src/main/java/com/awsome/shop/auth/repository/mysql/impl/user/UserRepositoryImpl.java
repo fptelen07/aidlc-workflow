@@ -42,6 +42,24 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public com.awsome.shop.auth.common.dto.PageResult<UserEntity> page(int page, int size, String keyword) {
+        com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper<UserPO> wrapper = new LambdaQueryWrapper<UserPO>();
+        if (keyword != null && !keyword.isBlank()) {
+            wrapper.like(UserPO::getUsername, keyword).or().like(UserPO::getDisplayName, keyword);
+        }
+        wrapper.orderByDesc(UserPO::getCreatedAt);
+        com.baomidou.mybatisplus.core.metadata.IPage<UserPO> result = userMapper.selectPage(
+                new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(page, size), wrapper);
+        com.awsome.shop.auth.common.dto.PageResult<UserEntity> pageResult = new com.awsome.shop.auth.common.dto.PageResult<>();
+        pageResult.setCurrent(result.getCurrent());
+        pageResult.setSize(result.getSize());
+        pageResult.setTotal(result.getTotal());
+        pageResult.setPages(result.getPages());
+        pageResult.setRecords(result.getRecords().stream().map(this::toEntity).collect(java.util.stream.Collectors.toList()));
+        return pageResult;
+    }
+
+    @Override
     public boolean existsByUsername(String username) {
         return userMapper.exists(
                 new LambdaQueryWrapper<UserPO>().eq(UserPO::getUsername, username));

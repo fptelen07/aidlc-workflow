@@ -16,4 +16,6 @@ public interface UserRepository {
     boolean existsByUsername(String username);
 
     void update(UserEntity user);
+
+    com.awsome.shop.auth.common.dto.PageResult<UserEntity> page(int page, int size, String keyword);
 }

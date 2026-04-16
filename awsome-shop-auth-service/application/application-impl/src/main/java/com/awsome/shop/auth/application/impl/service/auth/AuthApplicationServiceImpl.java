@@ -8,6 +8,7 @@ import com.awsome.shop.auth.common.exception.BusinessException;
 import com.awsome.shop.auth.domain.model.auth.TokenClaims;
 import com.awsome.shop.auth.domain.model.user.UserEntity;
 import com.awsome.shop.auth.domain.service.user.UserDomainService;
+import com.awsome.shop.auth.common.dto.PageResult;
 import com.awsome.shop.auth.infrastructure.security.api.service.PasswordHashService;
 import com.awsome.shop.auth.infrastructure.security.api.service.TokenService;
 import lombok.RequiredArgsConstructor;
@@ -81,6 +82,12 @@ public class AuthApplicationServiceImpl implements AuthApplicationService {
         }
         userDomainService.update(user);
         return toDTO(user);
+    }
+
+    @Override
+    public PageResult<UserDTO> listUsers(int page, int size, String keyword) {
+        PageResult<UserEntity> result = userDomainService.pageUsers(page, size, keyword);
+        return result.convert(this::toDTO);
     }
 
     private UserDTO toDTO(UserEntity user) {

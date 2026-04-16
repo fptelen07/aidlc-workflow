@@ -61,4 +61,13 @@ public class AuthController {
     public Result<UserDTO> updateProfile(@Valid @RequestBody UpdateProfileRequest req) {
         return Result.success(authApplicationService.updateProfile(req));
     }
+
+    @Operation(summary = "用户列表（管理员）")
+    @PostMapping("/api/v1/auth/user/list")
+    public Result<com.awsome.shop.auth.common.dto.PageResult<UserDTO>> listUsers(@RequestBody java.util.Map<String, Object> req) {
+        int page = req.get("page") != null ? ((Number) req.get("page")).intValue() : 1;
+        int size = req.get("size") != null ? ((Number) req.get("size")).intValue() : 10;
+        String keyword = req.get("keyword") != null ? req.get("keyword").toString() : null;
+        return Result.success(authApplicationService.listUsers(page, size, keyword));
+    }
 }
