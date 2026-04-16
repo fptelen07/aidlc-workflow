@@ -45,7 +45,7 @@ public class OrderApplicationServiceImpl implements OrderApplicationService {
 
         OrderEntity order = new OrderEntity();
         order.setUserId(request.getOperatorId());
-        order.setUserName("");
+        order.setUserName(serviceClient.getUserDisplayName(request.getOperatorId()));
         order.setProductId(request.getProductId());
         order.setProductName(productName);
         order.setPointsAmount(pointsAmount);

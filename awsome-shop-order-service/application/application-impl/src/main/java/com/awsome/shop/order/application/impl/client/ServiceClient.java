@@ -34,9 +34,9 @@ public class ServiceClient {
     }
 
     /**
-     * 获取用户邮箱
+     * 获取用户信息
      */
-    public String getUserEmail(Long userId) {
+    public JsonNode getUserInfo(Long userId) {
         try {
             String resp = webClient.post()
                     .uri(authUrl + "/api/v1/auth/me")
@@ -47,15 +47,29 @@ public class ServiceClient {
                     .block();
             JsonNode root = objectMapper.readTree(resp);
             if (root.get("code").asInt() == 0 && root.has("data")) {
-                JsonNode data = root.get("data");
-                return data.has("email") ? data.get("email").asText(null) : null;
+                return root.get("data");
             }
-            log.warn("获取用户邮箱失败: {}", resp);
             return null;
         } catch (Exception e) {
-            log.error("调用 Auth Service 获取用户邮箱失败", e);
+            log.error("调用 Auth Service 获取用户信息失败", e);
             return null;
         }
+    }
+
+    /**
+     * 获取用户邮箱
+     */
+    public String getUserEmail(Long userId) {
+        JsonNode user = getUserInfo(userId);
+        return user != null && user.has("email") ? user.get("email").asText(null) : null;
+    }
+
+    /**
+     * 获取用户显示名称
+     */
+    public String getUserDisplayName(Long userId) {
+        JsonNode user = getUserInfo(userId);
+        return user != null && user.has("displayName") ? user.get("displayName").asText("") : "";
     }
 
     /**
