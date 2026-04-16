@@ -104,7 +104,7 @@ services:
 
 # 邮件配置
 email:
-  from: no-reply@awsome-shop.com
+  from: pengtest@fujia.awsapps.com
 
 # AWS 配置
 aws:

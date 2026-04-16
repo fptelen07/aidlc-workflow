@@ -80,31 +80,21 @@ public class OrderApplicationServiceImpl implements OrderApplicationService {
         // 3. 生成兑换码
         String redemptionCode = RedemptionCodeGenerator.generate();
 
-        // 4. 获取用户邮箱
+        // 4. 获取用户邮箱并发送兑换码邮件（弱一致 — 失败不影响订单确认）
         String userEmail = serviceClient.getUserEmail(order.getUserId());
-        if (userEmail == null || userEmail.isBlank()) {
-            // 补偿：退还积分+库存
-            log.warn("获取用户邮箱失败，退还积分和库存 userId={}", order.getUserId());
-            serviceClient.grantPoints(order.getUserId(), (long) order.getPointsAmount(),
-                    "邮箱获取失败退还: " + order.getProductName());
-            serviceClient.deductStock(order.getProductId(), -1);
-            throw new BusinessException("BIZ_005", "获取用户邮箱失败，订单确认取消");
+        if (userEmail != null && !userEmail.isBlank()) {
+            try {
+                emailService.sendRedemptionEmail(userEmail, order.getProductName(),
+                        redemptionCode, order.getCreatedAt());
+                log.info("兑换码邮件发送成功 orderId={} email={}", order.getId(), userEmail);
+            } catch (Exception e) {
+                log.error("兑换码邮件发送失败（不影响订单确认） orderId={} email={}", order.getId(), userEmail, e);
+            }
+        } else {
+            log.warn("用户未设置邮箱，跳过邮件发送 userId={}", order.getUserId());
         }
 
-        // 5. 发送兑换码邮件（失败则订单确认也失败 — 强一致）
-        try {
-            emailService.sendRedemptionEmail(userEmail, order.getProductName(),
-                    redemptionCode, order.getCreatedAt());
-        } catch (Exception e) {
-            // 补偿：退还积分+库存
-            log.error("邮件发送失败，退还积分和库存 userId={}", order.getUserId(), e);
-            serviceClient.grantPoints(order.getUserId(), (long) order.getPointsAmount(),
-                    "邮件发送失败退还: " + order.getProductName());
-            serviceClient.deductStock(order.getProductId(), -1);
-            throw new BusinessException("BIZ_006", "邮件发送失败，订单确认取消");
-        }
-
-        // 6. 保存兑换码和邮箱到订单
+        // 5. 保存兑换码和邮箱到订单
         order.setRedemptionCode(redemptionCode);
         order.setUserEmail(userEmail);
 
