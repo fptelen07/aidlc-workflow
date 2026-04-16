@@ -20,6 +20,9 @@ public class ServiceClient {
     private final WebClient webClient;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    @Value("${services.auth-url:http://localhost:8001}")
+    private String authUrl;
+
     @Value("${services.product-url:http://localhost:8002}")
     private String productUrl;
 
@@ -28,6 +31,31 @@ public class ServiceClient {
 
     public ServiceClient(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.build();
+    }
+
+    /**
+     * 获取用户邮箱
+     */
+    public String getUserEmail(Long userId) {
+        try {
+            String resp = webClient.post()
+                    .uri(authUrl + "/api/v1/auth/me")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(Map.of("operatorId", userId))
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+            JsonNode root = objectMapper.readTree(resp);
+            if (root.get("code").asInt() == 0 && root.has("data")) {
+                JsonNode data = root.get("data");
+                return data.has("email") ? data.get("email").asText(null) : null;
+            }
+            log.warn("获取用户邮箱失败: {}", resp);
+            return null;
+        } catch (Exception e) {
+            log.error("调用 Auth Service 获取用户邮箱失败", e);
+            return null;
+        }
     }
 
     /**

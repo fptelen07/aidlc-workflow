@@ -14,4 +14,6 @@ public interface UserRepository {
     UserEntity findByUsername(String username);
 
     boolean existsByUsername(String username);
+
+    void update(UserEntity user);
 }

@@ -54,6 +54,12 @@ public class OrderDomainServiceImpl implements OrderDomainService {
     }
 
     @Override
+    public void update(OrderEntity order) {
+        order.setUpdatedAt(LocalDateTime.now());
+        orderRepository.update(order);
+    }
+
+    @Override
     public OrderEntity findById(Long id) {
         OrderEntity entity = orderRepository.findById(id);
         if (entity == null) {

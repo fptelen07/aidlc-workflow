@@ -27,6 +27,10 @@ public class OrderPO {
 
     private String status;
 
+    private String redemptionCode;
+
+    private String userEmail;
+
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 

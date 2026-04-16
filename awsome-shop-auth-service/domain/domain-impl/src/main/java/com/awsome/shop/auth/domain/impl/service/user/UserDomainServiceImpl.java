@@ -57,4 +57,9 @@ public class UserDomainServiceImpl implements UserDomainService {
     public UserEntity findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+    @Override
+    public void update(UserEntity user) {
+        userRepository.update(user);
+    }
 }

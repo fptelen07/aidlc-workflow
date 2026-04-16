@@ -22,6 +22,8 @@ public class UserPO {
 
     private String avatar;
 
+    private String email;
+
     private String status;
 
     @TableField(fill = FieldFill.INSERT)

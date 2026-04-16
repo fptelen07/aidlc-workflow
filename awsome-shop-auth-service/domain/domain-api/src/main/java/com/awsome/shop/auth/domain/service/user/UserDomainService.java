@@ -14,4 +14,6 @@ public interface UserDomainService {
     UserEntity findById(Long id);
 
     UserEntity findByUsername(String username);
+
+    void update(UserEntity user);
 }

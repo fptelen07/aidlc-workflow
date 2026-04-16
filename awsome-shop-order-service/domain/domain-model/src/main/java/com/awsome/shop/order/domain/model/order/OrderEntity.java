@@ -27,6 +27,16 @@ public class OrderEntity {
      */
     private String status;
 
+    /**
+     * 兑换码（格式：XXXX-XXXX-XXXX）
+     */
+    private String redemptionCode;
+
+    /**
+     * 用户邮箱
+     */
+    private String userEmail;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

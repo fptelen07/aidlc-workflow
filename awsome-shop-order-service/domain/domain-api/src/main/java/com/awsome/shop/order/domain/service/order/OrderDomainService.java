@@ -14,6 +14,8 @@ public interface OrderDomainService {
 
     OrderEntity reject(Long id);
 
+    void update(OrderEntity order);
+
     OrderEntity findById(Long id);
 
     PageResult<OrderEntity> listByUser(Long userId, String status, int page, int size);

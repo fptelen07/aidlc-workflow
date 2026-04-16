@@ -70,6 +70,19 @@ public class AuthApplicationServiceImpl implements AuthApplicationService {
         return toDTO(user);
     }
 
+    @Override
+    public UserDTO updateProfile(UpdateProfileRequest req) {
+        UserEntity user = userDomainService.findById(req.getOperatorId());
+        if (req.getEmail() != null) {
+            user.setEmail(req.getEmail());
+        }
+        if (req.getDisplayName() != null) {
+            user.setDisplayName(req.getDisplayName());
+        }
+        userDomainService.update(user);
+        return toDTO(user);
+    }
+
     private UserDTO toDTO(UserEntity user) {
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());
@@ -77,6 +90,7 @@ public class AuthApplicationServiceImpl implements AuthApplicationService {
         dto.setDisplayName(user.getDisplayName());
         dto.setRole(user.getRole());
         dto.setAvatar(user.getAvatar());
+        dto.setEmail(user.getEmail());
         dto.setCreatedAt(user.getCreatedAt());
         return dto;
     }

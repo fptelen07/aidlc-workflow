@@ -24,5 +24,7 @@ public class OrderDTO {
 
     private String status;
 
+    private String redemptionCode;
+
     private LocalDateTime createdAt;
 }

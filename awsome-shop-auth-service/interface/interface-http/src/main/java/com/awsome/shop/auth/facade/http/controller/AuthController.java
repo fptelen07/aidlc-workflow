@@ -55,4 +55,10 @@ public class AuthController {
     public Result<UserDTO> getCurrentUser(@RequestBody GetCurrentUserRequest req) {
         return Result.success(authApplicationService.getCurrentUser(req.getOperatorId()));
     }
+
+    @Operation(summary = "更新个人信息")
+    @PostMapping("/api/v1/auth/profile/update")
+    public Result<UserDTO> updateProfile(@Valid @RequestBody UpdateProfileRequest req) {
+        return Result.success(authApplicationService.updateProfile(req));
+    }
 }

@@ -16,6 +16,7 @@ public class UserEntity {
     private String displayName;
     private String role;        // "employee" | "admin"
     private String avatar;
+    private String email;
     private String status;      // "active" | "disabled"
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

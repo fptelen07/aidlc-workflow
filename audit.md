@@ -372,3 +372,30 @@
 ## WORKFLOW COMPLETE
 **Timestamp**: 2026-04-15T19:00:00Z
 **Summary**: AWSome Shop 积分商城全部业务功能开发完成。6 个工作单元全部交付，5 个后端服务部署到 EC2 运行中。
+
+## ============================================================
+## AI-DLC V2 — 邮件通知功能
+## ============================================================
+
+## V2 Initial User Request
+**Timestamp**: 2026-04-15T20:00:00Z
+**User Input**: "我现在准备开发第二版本，你用aidlc的流程，第二版需要加入，当员工购买成功后，需要发一封邮件给员工，邮件内容包括兑换码"
+**AI Response**: Starting AI-DLC V2 workflow — Workspace Detection phase
+**Context**: New feature request for existing brownfield project. Scope: Order confirmation email with redemption code.
+
+---
+
+## V2 - Requirements Analysis (答案收集)
+**Timestamp**: 2026-04-15T20:05:00Z
+**User Input**: "好了"
+**AI Response**: 读取 6 个答案，无矛盾。Q1:A(AWS SES), Q2:B(注册后设置邮箱), Q3:A(随机字符串兑换码), Q4:A(确认时生成), Q5:B(HTML邮件), Q6:C(强一致)
+**Context**: Proceeding to Workflow Planning — scope is small, skip User Stories and Units Generation.
+
+---
+
+## V2 - Code Generation Complete
+**Timestamp**: 2026-04-15T20:20:00Z
+**AI Response**: V2 code generation complete. Auth Service: email field + profile update API. Order Service: redemption code + AWS SES email. Both compiled on EC2.
+**Context**: Auth Service 12 files changed, Order Service 12 files changed. Ready for deployment.
+
+---

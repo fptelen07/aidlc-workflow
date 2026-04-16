@@ -36,6 +36,12 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public void update(UserEntity user) {
+        UserPO po = toPO(user);
+        userMapper.updateById(po);
+    }
+
+    @Override
     public boolean existsByUsername(String username) {
         return userMapper.exists(
                 new LambdaQueryWrapper<UserPO>().eq(UserPO::getUsername, username));
@@ -49,6 +55,7 @@ public class UserRepositoryImpl implements UserRepository {
         e.setDisplayName(po.getDisplayName());
         e.setRole(po.getRole());
         e.setAvatar(po.getAvatar());
+        e.setEmail(po.getEmail());
         e.setStatus(po.getStatus());
         e.setCreatedAt(po.getCreatedAt());
         e.setUpdatedAt(po.getUpdatedAt());
@@ -63,6 +70,7 @@ public class UserRepositoryImpl implements UserRepository {
         po.setDisplayName(e.getDisplayName());
         po.setRole(e.getRole());
         po.setAvatar(e.getAvatar());
+        po.setEmail(e.getEmail());
         po.setStatus(e.getStatus());
         return po;
     }

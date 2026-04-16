@@ -71,6 +71,8 @@ public class OrderRepositoryImpl implements OrderRepository {
         entity.setProductName(po.getProductName());
         entity.setPointsAmount(po.getPointsAmount());
         entity.setStatus(po.getStatus());
+        entity.setRedemptionCode(po.getRedemptionCode());
+        entity.setUserEmail(po.getUserEmail());
         entity.setCreatedAt(po.getCreatedAt());
         entity.setUpdatedAt(po.getUpdatedAt());
         return entity;
@@ -85,6 +87,8 @@ public class OrderRepositoryImpl implements OrderRepository {
         po.setProductName(entity.getProductName());
         po.setPointsAmount(entity.getPointsAmount());
         po.setStatus(entity.getStatus());
+        po.setRedemptionCode(entity.getRedemptionCode());
+        po.setUserEmail(entity.getUserEmail());
         return po;
     }
 }

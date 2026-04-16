@@ -98,5 +98,14 @@ shop:
 
 # 跨服务调用 URL
 services:
+  auth-url: http://localhost:8001
   product-url: http://localhost:8002
   points-url: http://localhost:8003
+
+# 邮件配置
+email:
+  from: no-reply@awsome-shop.com
+
+# AWS 配置
+aws:
+  region: us-east-1

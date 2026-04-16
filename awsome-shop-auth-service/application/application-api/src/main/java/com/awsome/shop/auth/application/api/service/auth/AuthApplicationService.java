@@ -18,4 +18,6 @@ public interface AuthApplicationService {
     ValidateResponse validateToken(ValidateRequest req);
 
     UserDTO getCurrentUser(Long operatorId);
+
+    UserDTO updateProfile(UpdateProfileRequest req);
 }
